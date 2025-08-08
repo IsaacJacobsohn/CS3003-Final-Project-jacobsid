@@ -1,6 +1,4 @@
 import Banking.*;
-
-import java.text.ParseException;
 import java.util.Scanner;
 
 public class App {
@@ -19,6 +17,7 @@ public class App {
         int accountNum = 0;
         int balance = Integer.MIN_VALUE;
         BankAccount account;
+
         while (!input.equals("q")) {
             System.out.println("\n\nEnter what you would like to do: ");
             System.out.println("'c' to open a new checking account");
@@ -82,6 +81,10 @@ public class App {
                     
                 }
                 account = user.getAccount(accountNum);
+                if (account == null) {
+                    System.out.println("Error: Not a real account number");
+                    input = "q";
+                }
                 while (!input.equals("q")) {
                     System.out.println("\nEnter what you would like to do: ");
                     System.out.println("'b' to check balance");
@@ -112,7 +115,6 @@ public class App {
                                 System.out.println("Error: " + e);
                             }
                         }
-                        account.withdraw(balance);
                         System.out.println("New balance: " + account.getBalance());
                         balance = Integer.MIN_VALUE;
                     }
@@ -125,13 +127,17 @@ public class App {
                                 if (balance <= 0) {
                                     throw new NumberFormatException();
                                 }
+                                account.deposit(balance);
                             }
                             catch (NumberFormatException e) {
                                 System.out.println("Error: deposit must be a positive non-zero number");
                                 accountNum = 0;
                             }
+                            catch (IllegalArgumentException e) {
+                                System.out.println("Error: deposit must be a positive non-zero number");
+                                accountNum = 0;
+                            }
                         }
-                        account.deposit(balance);
                         System.out.println("New balance: " + account.getBalance());
                         balance = Integer.MIN_VALUE;
                     }
@@ -142,7 +148,7 @@ public class App {
                 input = "g";
             }
         }
-
+        System.out.println("\nThank you for using our bank");
         scanner.close();
     }
 }
