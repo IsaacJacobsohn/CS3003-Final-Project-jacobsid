@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 
-import Banking.BankAccount;
-import Banking.CheckingAccount;
-import Banking.SavingsAccount;
+import Banking.*;
 
 public class Customer {
     private String firstName;
